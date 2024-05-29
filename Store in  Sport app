@@ -1,0 +1,52 @@
+//
+//  ContentView.swift
+//  SegmentUI
+//
+//  Created by Alexandr on 24.12.2023.
+//
+
+import SwiftUI
+
+struct ContentView: View {
+    @State var segmentIndex = 0
+    @State var offSetX = 0
+    
+    var company = ["NIKE", "PUMA", "REEBOOK"]
+    var sneakers = ["nike.jpeg", "puma.jpeg", "reebook.jpeg"]
+    
+    var body: some View {
+        VStack {
+            
+            Text("NAME SHOES: \(company[segmentIndex])")
+                .font(Font.system(.title))
+            Spacer()
+            
+            ZStack {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(.gray)
+                    .padding()
+                    .offset(x: CGFloat(offSetX))
+                Image(sneakers[segmentIndex])
+                    .resizable()
+                    .frame(width: 300, height: 300)
+                    .offset(x: CGFloat(offSetX))
+            }
+                Picker(selection: $segmentIndex, label:
+                        Text("")) {
+                    ForEach(company.indices, id: \.self) { index in
+                        Text(self.company[index]).tag(index)
+                    }
+                }.pickerStyle(SegmentedPickerStyle())
+                .padding()
+                Spacer().frame(height: 150)
+                
+            }
+        }
+    }
+
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+        }
+    }
+
